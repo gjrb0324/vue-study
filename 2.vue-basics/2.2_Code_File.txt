@@ -1,0 +1,155 @@
+1. v-bind
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>hello vue.js</title>
+    <script src = "https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id = "simple">
+        <input id ="a" type="text" :value="message">
+        <br>
+        <img v-bind:src="imagePath" />
+    </div>
+    <script type="text/javascript">
+    var model = {
+        message : 'v-bind 디렉티브',
+        imagePath : 'https://image.yes24.com/goods/69303801/L'
+    };
+
+    var simple = new Vue({
+        el : '#simple',
+        data : model
+    })
+    </script>
+</body>
+</html>
+
+2. v-model
+
+2-1 input type = text에서의 기본적 v-model 사용법
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>hello vue.js</title>
+    <script src = "https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id = "simple">
+     <input type="text" v-model="name" placeholder="이름을 입력하세요" /> 
+     <br />
+     입력된 이름 : <h2 v-html="name"></h2>
+    </div>
+    <script type="text/javascript">
+    var twoway = new Vue ({
+        el : '#simple',
+        data : {
+            name : ''
+        }
+    })
+    </script>
+</body>
+</html>
+
+2-2. 
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>hello vue.js</title>
+    <script src = "https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id = "simple1">
+     <div>좋아하는 과일을 모두 골라주세요 : </div>
+     <input type="checkbox" value ="1" v-model="fruits"> 사과,
+     <input type="checkbox" value ="2" v-model="fruits"> 키위,
+     <input type="checkbox" value ="3" v-model="fruits"> 포도,
+     <input type="checkbox" value ="4" v-model="fruits"> 수박,
+     <input type="checkbox" value ="5" v-model="fruits"> 참외
+    </div>
+     <hr />  
+     <!-- hr 태그는 줄 그으면서 한줄 띄움 -->
+     <div id="simple2">
+         선택한 과일들 : <span v-html="fruits"></span>
+    <!-- span 태그는 그 객체가 차지하는 크기 만큼만 공간할당 동적으로 공간할당 가능할듯 -->
+     </div>
+    <script type="text/javascript">
+    var model = {
+        fruits : [] //vue에서의 배열 선언법
+    };
+
+    
+    var simple1 = new Vue({
+        el : '#simple1', data : model
+    });
+
+    var simple2 = new Vue({
+        el : '#simple2', data : model
+    });
+    </script>
+</body>
+</html>
+
+3. v- if / v-show / v-else / v-else-if
+
+3-1. v-if VS v-show
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>hello vue.js</title>
+    <script src = "https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id = "account">
+        예금액 : <input type="text" v-model="amount" />
+        <img v-if="amount < 0" src="images/error.png"
+            title = "마이너스는 허용하지 않습니다"
+            style="width:15px; height:15px; vertical-align: middle" /> 
+    </div>
+    <script type="text/javascript">
+    var simple1 = new Vue({
+        el : '#account',
+        data :{
+            amount : 0 //amount의 초기값 설정
+        }
+    })
+    </script>
+</body>
+</html>
+
+3-2. v-if, v-else, v-else- if
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>hello vue.js</title>
+    <script src = "https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="account">
+        잔고 : <input type="text" v-model="balance" />
+        <br />
+        회원님의 등급 :
+        <span v-if="balance >= 1000000">Gold</span>
+        <span v-else-if="balance >= 500000">Silver</span>
+        <span v-else-if="balance >= 200000">Bronze</span>
+        <span v-else>Basic</span>
+    </div>
+    <script type="text/javascript">
+    var simple1 = new Vue({
+        el : '#account',
+        data : {
+            balance : 0
+        }
+    })
+    </script>
+</body>
+</html>

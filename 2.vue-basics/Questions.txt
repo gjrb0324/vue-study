@@ -1,0 +1,5 @@
+2.2 기본 디렉티브
+
+- v- model
+Q1. 실수로 twoway의 data를 date로 타이핑하고 inputbox에 값을 입력했더니 v-model의 name값에는 적용이 되었지만 v-html의 name값에는 적용이 되지 않았음
+왜 일까.
