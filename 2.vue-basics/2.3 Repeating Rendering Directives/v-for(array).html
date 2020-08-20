@@ -8,6 +8,7 @@
         #list {width: 400px; border:1px solid black; border-collapse:collapse;}
         #list td,#list th{border: 1px solid black; text-align:center;}
         #list > thead > tr {color:yellow;background-color: purple;}
+        #div {height:2px; background-color: gray;}
     </style>
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
 </head>
@@ -19,13 +20,18 @@
                     <th>번호</th><th>이름</th><th>전화번호</th><th>주소</th>
                 </tr>
             </thead>
-        <tbody id="contacts">
-            <tr v-for ="contact in contacts">
+        <tbody id="contacts"> <!-- tbody의 id contacts는 #example로 전달되는 데이터의 contacts와는 관계 X-->
+            <template v-for="(contact,index) in contacts">
+            <tr :key="contact.no">  <!-- (contact,index)로 <td> 태그 안에 쓰일 변수 선언-->
                 <td>{{contact.no}}</td>
                 <td>{{contact.name}}</td>
                 <td>{{contact.tel}}</td>
                 <td>{{contact.address}}</td>
             </tr>
+            <tr id="div" class="divider" v-if="index % 5===4">
+                <td colspan="4"></td>
+            </tr>
+            </template>
         </tbody>
         </table>
     </div>
@@ -40,7 +46,7 @@
             {"no" : 98, "name" : "호창", "tel": "010-3456-8297", "address" : "대전"},
             {"no" : 97, "name" : "신동", "tel": "010-3456-8296", "address" : "울산"},
             {"no" : 96, "name" : "미현", "tel": "010-3456-8295", "address" : "광주"},
-            {"no" : 95, "name" : "승우", "tel": "010-3456-8294", "address" : "대구"},
+            {"no" : 95, "name" : "승현", "tel": "010-3456-8294", "address" : "대구"},
             {"no" : 94, "name" : "민수", "tel": "010-3456-8293", "address" : "경북"},
             {"no" : 93, "name" : "철수", "tel": "010-3456-8292", "address" : "충남"},
             {"no" : 92, "name" : "짱구", "tel": "010-3456-8291", "address" : "강원"},

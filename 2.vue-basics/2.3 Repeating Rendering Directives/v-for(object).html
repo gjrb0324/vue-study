@@ -10,7 +10,7 @@
         <select id="regions">
             <!-- 아래 option disabled 요소는 지역을 선택하세요 필드를 선택 불가능하게 만드는 것-->
             <option disabled="disabled" selected>지역을 선택하세요</option> 
-            <option v-for="(val,key) in regions" v-bind:value="key">{{val}}</option>
+            <option v-for="(val,key,index) in regions" v-bind:value="key">{{index+1}} : {{val}}</option>
         </select>
     </div>
     <script type="text/javascript">

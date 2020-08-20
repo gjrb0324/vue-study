@@ -1,0 +1,60 @@
+### 2.3 반복 렌더링 디렉티브 (v-for) 
+
+#### 원본 데이터 배열인 경우 : 배열의 요소 하나씩
+v-for="(하나씩 접근하고자 하는 것의 변수명) in (script부분에서 data로 연동할때 선언한 배열의 이름)"
+
+	--javascript--
+	var model = { 
+		"contacts" : [
+		{ "no" : 100, "name" : ~, ...}
+		....
+		]
+	}
+	--html--
+	<tr v-for="(contacts,index) in contacts")>...</tr>
+
+#### 원본 데이터 객체인 경우 : key,value 값으로 (HashMap)
+v-for="(val,key) in 객체명"
+	
+	--javascript--	
+	var regions = {
+		"A" : "Asia",
+		"B" : "America",
+		"C" : "Europe"
+	};
+	--html--
+	<option v-for="(val,key,index) in regions"> .... </option>
+
+#### <template> 태그
+
+여러 요소의 그룹 반복 렌더링
+
+아래의 코드는 주어진 리스트를 인덱스에 따라 5 항목 마다 굵은 선 처리 하는 코드, <tr> 두 개를 그룹화해서 반복 렌더링
+
+	<tbody id="contacts">
+	<template v-for="(contact,index) in contacts">
+	<tr>
+		......
+	</tr>
+	<tr class = "divider" v-if="index % 5 ===4">
+		...
+	</tr>
+	</template>
+
+#### 막간 : virtual DOM with v-for , 배열 데이터 변경시 유의점
+
+virtual DOM : vue 2.0부터 적용된 가상 DOM을 활용하여 렌더링 속도를 향상 시키는 방법.
+최근의 사이트에는 DOM이 수천개가 있는데 이것의 데이터를 바꾸고 싶을때 처음부터 바꾸려면 too expensive.
+따라서 가상 DOM을 활용하여 DOM 요소의 데이터만 변경하여 렌더링 속도 향상
+
+만일 DOM 요소를 추적하여 DOM 요소의 위치를 직접 변경하고자 한다면. DOM 요소에 v-bind로 key 특성 부여.
+DB 조회해서 얻어낸 결과 렌더링 하는 경우에는 key 특성에 기본키 값 바인딩.  (아직 잘 이해는 안됨)
+
+	<tbody id="contacts>
+	<template ...>
+	<tr v-bind:key="contact.no">
+
+배열 데이터 변경시 유의점: 배열데이터를  콘솔에서 바꾸고 싶을때는 단순히 list.contacts[0] = {..} 로는 불가능함.
+하지만 각 배열 내부 속성 직접 변경 (list.contacts[1].name ="~" ) 은 화면에 즉시 변경
+기존의 배열값을 직접 변경하기 위해서는 Vue.set 메서드 사용
+(Vue.set(list.contacts,0,{~~~~~})
