@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>02-08</title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="example">
+        <select id="regions">
+            <!-- 아래 option disabled 요소는 지역을 선택하세요 필드를 선택 불가능하게 만드는 것-->
+            <option disabled="disabled" selected>지역을 선택하세요</option> 
+            <option v-for="(val,key) in regions" v-bind:value="key">{{val}}</option>
+        </select>
+    </div>
+    <script type="text/javascript">
+    //regions 객체 선언
+    var regions={
+        "A" : "Asia",
+        "B" : "America",
+        "C" : "Europe",
+        "D" : "Africa",
+        "E" : "Oceania"
+    };
+
+    var list = new Vue({
+        el : "#example",
+        data : {regions : regions}
+    });
+    </script>
+</body>
+</html>
