@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>02-13</title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="example">
+    <p>
+    국가명 : <input type="text" v-model="countryname" placeholder="국가명" />
+    </p>
+    <table id = "list">
+        <thead>
+            <tr>
+                <th>번호</th><th>국가명</th><th>수도</th><th>지역</th>
+            </tr>
+        </thead>
+        <tbody id="contacts">
+            <tr v-for="c in filtered">
+                <td>{{c.no}}</td>
+                <td>{{c.name}}</td>
+                <td>{{c.capital}}</td>
+                <td>{{c.region}}</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+    <script type="text/javascript">
+    var model = {
+        countryname : "",
+        countries : [
+            {no: 1, name: "미국", capital : "워싱턴DC", region : "America"},
+            {no: 2, name: "프랑스", capital : "파리", region : "Europe"},
+            {no: 3, name: "영국", capital : "런던", region : "Europe"},
+            {no: 4, name: "한국", capital : "서울", region : "Asia"},
+            {no: 5, name: "일본", capital : "도쿄", region : "Asia"},
+        ]
+    }
+
+    var clist = new Vue({
+        el : "#example",
+        data : model,
+        computed : {
+            filtered : function() {
+                var cname = this.countryname.trim();
+                return this.countries.filter(function(item,index){
+                    if(item.name.indexOf(cname) > -1) { //indexOf() 메서드로 cname이 존재하는지 판단(존재하면 값을 가지므로 -1보다 클 수 있음)
+                        return true;
+                    }
+                });
+            }
+        }
+    }
+    )
+    </script>
+</body>
+</html>

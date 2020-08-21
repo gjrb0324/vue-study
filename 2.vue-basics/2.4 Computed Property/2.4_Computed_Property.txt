@@ -1,0 +1,70 @@
+2.4 계산형 속성 (Computed Property)
+=================
+
+##  코드 예제
+Vue 객체를 만들 때 computed라는 속성과 함께 함수를 등록해두면 속성 처럼 사용 가능.
+
+	--javascript--
+	var clist = new Vue({
+		el: "#example",
+		data : model,
+		computed : {
+			filtered : function() {
+				//여기서 cname 변수로 할당 이유: 아래 **콜백함수** (function(item,index)) 안에서의 this는
+				// 이때 this는 Vue객체가 아니고 window 객체
+				var cname = this.countryname.trim();
+				//filter 함수 : 배열의 아이템 중 조건 만족하는 아이템 모아서 새로운 배열 리턴
+				//Vue 객체(this)의 countries 배열 중에서 filter
+
+				return this.countries.filter(function(item,index){
+				//indexOf() : item.name, 즉 countries 배열의 아이템의 이름 중 검색한 문자열(cname)을 포함한 거
+				//찾으면 그것의 index->true return 못 찾으면 -1 리턴 
+					if(item.name.indexOf(cname) > -1) {
+						return true;
+					}
+				});
+			}
+		}
+	});
+	--html--
+	<!-- v-model로 사용자로 부터 입력받는 변수 설정 -->
+	국가명 : <input type="text" v-model="countryname" placeholder="국가명" />
+	.....
+		<tr v-for="c in filtered">
+		<td>{{c.no}}</td>
+		......
+
+
+
+## 콜백 함수
+어떤 특정한 시점에서 호출되는 함수
+
+#### 1. 콜백함수 정의와 호출 동시
+
+	---함수 정의---
+	function plus(a, b, callback) { 
+		var sum = a + b; 
+		callback(sum); 
+	}
+	---함수 호출, 콜백함수 정의와 호출---
+	plus(1,2,function(result){
+		console.log(result);
+	});
+
+
+#### 2. 정의된 함수를 인자로 전달
+
+	function plus(a, b, callback) { 
+		var sum = a + b; 
+		callback(sum); 
+	} 
+	function print(result) { // 콜백 함수로 사용할 함수 정의 
+		console.log(result); 
+	} 
+	plus(1, 2, print);
+
+#### 콜백 함수를 사용하는 이유
+
+콜백함수를 사용하지 않을경우, 예를 들어 각각 따로 정의된 print와 plus라는 일반 함수 두개를 사용할 때, print(plus(1,2))와 같은 경우, print함수는
+plus함수가 전부 연산이 끝난 뒤에야 작동하는데, 만약 웹사이트 상에서 plus함수가 로직이 매우 복잡하여 처리속도가 늦어지게 된다면 실행이 계속
+늦춰져서 그 사이트의 동작이 멈춰 버릴 수 있음
